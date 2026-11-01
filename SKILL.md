@@ -25,7 +25,7 @@ description: >-
 
 | look-id | 路径 | 服装 | 状态 |
 |---------|------|------|------|
-| `look-00-body-base` | `assets/looks/look-00-body-base/` | **性感内衣**换衣基准 | **待替换**（目录在，图未入库） |
+| `look-00-body-base` | `assets/looks/look-00-body-base/` | 黑蕾丝内衣换衣基准（**不是裸体**） | 已入库 |
 | `look-01-white-tank`（**默认**） | `assets/looks/look-01-white-tank/` | 白罗纹背心 | 已入库 |
 | `look-02-black-turtleneck` | `assets/looks/look-02-black-turtleneck/` | 黑高领 | 已入库 |
 | `look-03-street-chic` | `assets/looks/look-03-street-chic/` | 年轻街头：奶茶染发 + 白短外套/白 Tee | 已入库 |
@@ -39,10 +39,13 @@ look-01 历史脸锁（只作参考，交付仍用 `host_look.jpg`）：
 - `assets/looks/look-01-white-tank/host_look-canonical.jpg`
 - `assets/looks/look-01-white-tank/host_ref-canonical.jpg`
 
-### look-00（待替换）
-侃华改口：**不要裸体，也不要肉色无缝连体。** look-00 改为性感内衣换衣基准。
+### look-00（黑蕾丝内衣换衣基准）
+`look-00-body-base` 是衣柜换衣基准：**黑蕾丝连体内衣，不是裸体，也不是肉色无缝。** 同一张花花脸；左胸小痣（观众右侧）锁在露胸口的正视与 3/4。只此一套交付：
 
-本仓没有收录旧版肉色无缝半身，也没有灰 mocap 七视。真裸被图像策略拦截；肉色无缝是被否决的替代，不是情色裸图，也不再使用。父代理随后附上 lingerie 的 `host_look.jpg` 与 `7view-sheet.jpg` 后，再放入 `assets/looks/look-00-body-base/`。图到位前不要用 look-00 出画，默认 look-01。
+- `assets/looks/look-00-body-base/host_look.jpg` — 一张正视半身
+- `assets/looks/look-00-body-base/7view-sheet.jpg` — 七视，先于 H3 / Ref2VA
+
+默认出画仍是 look-01。look-00 用来换装，不代替白背心主持定妆。
 
 ### 硬锁
 1. **同一张花花脸**：禁换脸。历史脸锁参考仅 look-01 的两张 canonical。
