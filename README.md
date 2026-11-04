@@ -1,35 +1,31 @@
 # 一天一个 GitHub · 花花主持竖版
 
-Skill id：`huahua-zhuchi-skill`（由原 `github-vivi` / `github-vivi-skill` 更名）。
-仓库：https://github.com/huakan88/huahua-zhuchi-skill
+Skill id：`huahua-zhuchi-skill`（https://github.com/huakan88/huahua-zhuchi-skill）
 
 ## 何时用
-
 「一天一个 GitHub」竖版口播、花花出镜：开场/收束真全屏数字人、中段 FullBleed、本机 H3 真对口。
 
-## 内容
-
-- `SKILL.md` — 完整流程与硬规则（含多套定妆路径）
-- `assets/looks/` — 花花衣柜数字资产，供其他 agent 复用
-- 本 README
-
-口播可自称「花花」；禁频道写死「花花聊科学」。成片与中间产物不放本仓。
-
 ## 定妆资产 `assets/looks/`
-
-**默认：look-01 白背心** `assets/looks/look-01-white-tank/host_look.jpg`。
-
-每套已入库 look：一张正视 `host_look.jpg` + 一张 `7view-sheet.jpg`（16:9 黑底横排 Front | 3/4 F | Side L | 3/4 B | Back | Side R | Top）。七视先于本机 H3 / Ref2VA。
+每套统一交付：
+- `host_look.jpg` — **唯一**半身正视锁定图（头正直看镜头）
+- `7view-sheet.jpg` — 16:9 七视图（黑底横排 Front|3/4 F|Side L|3/4 B|Back|Side R|Top）
 
 | 目录 | 说明 |
 |------|------|
-| `assets/looks/look-00-body-base/` | 黑蕾丝内衣换衣基准（不是裸体）：`host_look.jpg` + `7view-sheet.jpg` |
-| `assets/looks/look-01-white-tank/` | **默认**白罗纹背心；另含 `host_look-canonical.jpg`、`host_ref-canonical.jpg` 脸锁 |
-| `assets/looks/look-02-black-turtleneck/` | 黑高领 |
-| `assets/looks/look-03-street-chic/` | 奶茶染发街头 |
-| `assets/looks/look-04-blazer/` | 西装 |
-| `assets/looks/look-05-sexy-evening/` | 黑缎绸吊带 |
-| `assets/looks/look-06-lululemon-yoga/` | 无 logo 贴身瑜伽 |
-| `assets/looks/look-07-dress/` | 藕粉裙 + 半扎波浪 |
+| `look-00-body-base/` | 黑蕾丝内衣换衣基准（不是裸体）；七视下装肉色内裤 |
+| `look-01-white-tank/` | **默认**。`host_look-user-preferred-20261104.jpg` = `host_look.jpg`（md5 `44385332ae3f6a7e6aff9ca423f92ee1`）；另含 `host_look-canonical.jpg` / `host_ref-canonical.jpg` 历史脸锁 |
+| `look-02-black-turtleneck/` | 黑高领 |
+| `look-03-street-chic/` | 年轻街头（奶茶染发 + 标准白棒球衫 jersey） |
+| `look-04-blazer/` | 西装外套 |
+| `look-05-sexy-evening/` | 黑缎绸吊带（性感女人味） |
+| `look-06-lululemon-yoga/` | 无 logo 贴身瑜伽套装（露腰 crop + 高腰裤） |
+| `look-07-dress/` | 日常优雅藕粉裙 + 半扎大波浪 |
 
-**硬锁**：同一张脸；左胸小痣（观众右）露胸口必留；每套只一张正视 `host_look.jpg`；七视先于 H3 / Ref2VA。look-00 只作换衣基准，默认出画仍是 look-01。
+**硬锁（侃华 2026-11-04 已锁定）**：同一张脸，脸锁 preferred；左胸小痣（观众右）露胸口必留；头大小/胸量对齐 look-01 preferred；七视下装=肉色内裤；半身禁固定右歪头；七视先于本机 H3 真对口。
+
+## 仓库内容
+- `SKILL.md` — 完整流程与硬规则
+- `assets/looks/` — look-00 换衣基准 + look-01～07 定妆（半身+七视）
+- 本 README
+
+成片与中间产物不放本仓。其他 Agent 可直接 clone / 引用本仓 `assets/looks/<look>/host_look.jpg`。

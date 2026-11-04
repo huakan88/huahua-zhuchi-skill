@@ -1,9 +1,8 @@
 ---
 name: huahua-zhuchi-skill
-description: >-
-  做「一天一个 GitHub」竖版口播（花花出镜）时用：开场与收束真全屏数字人、中段 FullBleed 闪回、本机 H3
-  真对口、头/肩须有动感；口播先过眼。多套定妆见 assets/looks（默认 look-01 白背心）。
+description: 做「一天一个 GitHub」竖版口播（花花出镜）时用：开场与收束真全屏数字人、中段 FullBleed 闪回、本机 H3 真对口、头/肩须有动感；口播先过眼。多套定妆见 assets/looks。
 ---
+
 # 一天一个 GitHub · 花花主持竖版
 
 与口播全流程 skill（`skill-1791809256290`）配套；冲突时以用户当次指令为准。公共底座 `skill-1792547224096`。
@@ -16,42 +15,26 @@ description: >-
 ## 定妆（多套）
 资产目录：`assets/looks/<look-id>/`
 
-**默认出画是 look-01 白罗纹背心**：`assets/looks/look-01-white-tank/host_look.jpg`。旧工程若仍找 `vivi-zhuchi` / `host_look.jpg`，从该文件复制或软链，不要另造一张脸。
-
-每套已入库 look 只有两张交付图（look-01 另附历史脸锁，见下）：
-
-- `host_look.jpg` — **一张**正视半身（头正直看镜头）
-- `7view-sheet.jpg` — 16:9 黑底横排七视：Front | 3/4 F | Side L | 3/4 B | Back | Side R | Top，中性站姿
-
-| look-id | 路径 | 服装 | 状态 |
+| look-id | 服装 | 半身 | 七视 |
 |---------|------|------|------|
-| `look-00-body-base` | `assets/looks/look-00-body-base/` | 黑蕾丝内衣换衣基准（**不是裸体**） | 已入库 |
-| `look-01-white-tank`（**默认**） | `assets/looks/look-01-white-tank/` | 白罗纹背心 | 已入库 |
-| `look-02-black-turtleneck` | `assets/looks/look-02-black-turtleneck/` | 黑高领 | 已入库 |
-| `look-03-street-chic` | `assets/looks/look-03-street-chic/` | 年轻街头：奶茶染发 + 白短外套/白 Tee | 已入库 |
-| `look-04-blazer` | `assets/looks/look-04-blazer/` | 西装外套 | 已入库 |
-| `look-05-sexy-evening` | `assets/looks/look-05-sexy-evening/` | 黑缎绸吊带 | 已入库 |
-| `look-06-lululemon-yoga` | `assets/looks/look-06-lululemon-yoga/` | 无 logo 贴身瑜伽（露腰 crop + 高腰裤） | 已入库 |
-| `look-07-dress` | `assets/looks/look-07-dress/` | 日常优雅藕粉裙 + 半扎大波浪 | 已入库 |
-
-look-01 历史脸锁（只作参考，交付仍用 `host_look.jpg`）：
-
-- `assets/looks/look-01-white-tank/host_look-canonical.jpg`
-- `assets/looks/look-01-white-tank/host_ref-canonical.jpg`
-
-### look-00（黑蕾丝内衣换衣基准）
-`look-00-body-base` 是衣柜换衣基准：**黑蕾丝连体内衣，不是裸体，也不是肉色无缝。** 同一张花花脸；左胸小痣（观众右侧）锁在露胸口的正视与 3/4。只此一套交付：
-
-- `assets/looks/look-00-body-base/host_look.jpg` — 一张正视半身
-- `assets/looks/look-00-body-base/7view-sheet.jpg` — 七视，先于 H3 / Ref2VA
-
-默认出画仍是 look-01。look-00 用来换装，不代替白背心主持定妆。
+| `look-00-body-base` | 黑蕾丝内衣换衣基准（不是裸体；七视下装肉色内裤） | `assets/looks/look-00-body-base/host_look.jpg` | `assets/looks/look-00-body-base/7view-sheet.jpg` |
+| `look-01-white-tank`（**默认**） | 白罗纹背心 | `host_look.jpg` | `7view-sheet.jpg` |
+| `look-02-black-turtleneck` | 黑高领 | 同上 | 同上 |
+| `look-03-street-chic` | 年轻街头：奶茶染发 + 标准白棒球衫 jersey（罗纹领口+排扣开襟短款） | 同上 | 同上 |
+| `look-04-blazer` | 西装外套 | 同上 | 同上 |
+| `look-05-sexy-evening` | 黑缎绸吊带（性感女人味） | 同上 | 同上 |
+| `look-06-lululemon-yoga` | 无 logo 贴身瑜伽（露腰 crop + 高腰裤） | 同上 | 同上 |
+| `look-07-dress` | 日常优雅藕粉裙 + 半扎大波浪 | 同上 | 同上 |
 
 ### 硬锁
-1. **同一张花花脸**：禁换脸。历史脸锁参考仅 look-01 的两张 canonical。
+**定妆已锁定（侃华 2026-11-04）**：本套半身 + 七视「非常好，固定」。锁脸/锁头胸对照 look-01：`host_look-user-preferred-20261104.jpg`（= 同目录 `host_look.jpg`，md5 `44385332ae3f6a7e6aff9ca423f92ee1`）。七视下装=肉色内裤；头大小/胸量对齐该 preferred。禁擅自改定妆；禁推仓除非项目总管放行。
+
+1. **同一张花花脸**：禁换脸。现行 preferred：look-01 `host_look-user-preferred-20261104.jpg`（= `host_look.jpg`）。历史脸锁仍存 `host_look-canonical.jpg` / `host_ref-canonical.jpg`。
 2. **左胸小痣（观众右侧）**：凡露锁骨/胸口的半身与七视正视/3/4 **必须保留**，绝不能少。
-3. **每套只一张正视 `host_look.jpg`**：头正直看镜头；禁固定右歪头；勿再并存 natural 变体作交付。
-4. **七视先于 H3 / Ref2VA**：新 look / 换装须先有 `7view-sheet.jpg`，再喂本机 H3 或 Ref2VA。没有七视不要开对口或换装。
+3. **半身统一模板**：每套只交付一张正视锁定图 `host_look.jpg`（头正直看镜头）；禁固定右歪头；勿再并存 natural 变体作交付；**头大小与胸量肉眼对齐 look-01 preferred**。
+4. **七视先于 H3**：新 look / 换装须先有 `7view-sheet.jpg`（16:9 黑底横排 Front|3/4 F|Side L|3/4 B|Back|Side R|Top，中性站姿；**下装=肉色内裤**，非瑜伽裤/黑短裤）再喂本机 H3。
+
+默认出画基准：`assets/looks/look-01-white-tank/host_look.jpg`（= preferred；路径可仍兼容旧名 vivi-zhuchi `host_look.jpg` 的用法：复制或软链到工程 assets）。
 
 ## 对口
 - TX-HK **本机 MiniMax H3** + lipsync_repair；|lag|≤2（corr&lt;0.4 勿采信）。
