@@ -12,8 +12,7 @@ Skill id：`huahua-zhuchi-skill`（https://github.com/huakan88/huahua-zhuchi-ski
 
 | 目录 | 说明 |
 |------|------|
-| `look-00-body-base/` | 黑蕾丝内衣换衣基准（不是裸体）；七视下装肉色内裤 |
-| `look-01-white-tank/` | **默认**。`host_look-user-preferred-20261104.jpg` = `host_look.jpg`（md5 `44385332ae3f6a7e6aff9ca423f92ee1`）；另含 `host_look-canonical.jpg` / `host_ref-canonical.jpg` 历史脸锁 |
+| `look-01-white-tank/` | 默认；另含 `host_look-canonical.jpg` / `host_ref-canonical.jpg` 历史脸锁 |
 | `look-02-black-turtleneck/` | 黑高领 |
 | `look-03-street-chic/` | 年轻街头（奶茶染发 + 标准白棒球衫 jersey） |
 | `look-04-blazer/` | 西装外套 |
@@ -21,11 +20,11 @@ Skill id：`huahua-zhuchi-skill`（https://github.com/huakan88/huahua-zhuchi-ski
 | `look-06-lululemon-yoga/` | 无 logo 贴身瑜伽套装（露腰 crop + 高腰裤） |
 | `look-07-dress/` | 日常优雅藕粉裙 + 半扎大波浪 |
 
-**硬锁（侃华 2026-11-04 已锁定）**：同一张脸，脸锁 preferred；左胸小痣（观众右）露胸口必留；头大小/胸量对齐 look-01 preferred；七视下装=肉色内裤；半身禁固定右歪头；七视先于本机 H3 真对口。
+**硬锁**：同一张脸；左胸小痣（观众右）露胸口必留；半身禁固定右歪头；七视先于 H3。
 
 ## 仓库内容
 - `SKILL.md` — 完整流程与硬规则
-- `assets/looks/` — look-00 换衣基准 + look-01～07 定妆（半身+七视）
+- `assets/looks/` — 七套定妆（半身+七视）
 - 本 README
 
 成片与中间产物不放本仓。其他 Agent 可直接 clone / 引用本仓 `assets/looks/<look>/host_look.jpg`。
