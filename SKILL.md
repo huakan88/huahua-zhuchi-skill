@@ -41,6 +41,27 @@ description: 做「一天一个 GitHub」竖版口播（花花出镜）时用：
 - **禁** Grok i2v / 云端假对口交付。云端只配音/素材/Remotion。
 - 布局改版可只重拼 Remotion，复用已过关 H3 与旁白。
 
+## 超分（**交付必做 · 2026-11-09 起**）
+
+出画完 → **必须超分**，再进 Remotion。竖版横版一律照此执行：
+
+```bash
+python <skill>/scripts/upscale_segments.py s1 s7 s16     # 指定段
+python <skill>/scripts/upscale_segments.py --all          # 全部出画段
+```
+
+- 出画统一 **576×1024** → Real-ESRGAN **`x4plus` + `-t 0`** → **1152×2048**
+  → lanczos 下采样 1080×1920 → `cas=0.35` 极轻锐化 → CRF16，音轨一并 mux。
+- 输出在 `gen_up/renoise-<id>.mp4`，**已是 1080×1920**。包装层 **1:1 直接铺，不要再缩放**。
+- **三个坑（2026-11-09 实测）**：
+  1. 默认 tile=128 会把画面**拼成错位碎块** → 必须 `-t 0`；
+  2. `realesr-animevideov3` 用在真人脸上出**描边感、睫毛结块** → 只用 `x4plus`；
+  3. x4plus 会磨掉毛孔 → 接 `cas=0.35`，**不要上强锐化**（会蜡，撞「禁磨皮」）。
+- **超分后重跑一次 `sync_pic.py`**：确认超分没把口型弄糊。
+- 别再顶 704×1280 出画求原生清晰度 —— 8GB 卡在 7 秒以上片段会 **torch OOM**；
+  576×1024 + standard + steps≥8 超分后实测（睫毛、发丝、皮肤纹理）不比 704 原生差，每步还快约 4 成。
+- Real-ESRGAN 本机已装在 `tools/esrgan/`（**不入 Git 仓**）；换机器时跑 `python <skill>/scripts/fetch_esrgan.py` 自动下载（直连不通会自动走 gh-proxy 镜像）。
+
 ## 画面（handraw v3/v4）
 | 段 | 布局 |
 |----|------|
