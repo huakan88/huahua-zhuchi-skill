@@ -1,6 +1,6 @@
 ---
 name: huahua-zhuchi-skill
-description: 做「一天一个 GitHub」竖版口播（花花出镜）时用：开场与收束真全屏数字人、中段 FullBleed 闪回、本机 H3 真对口、头/肩须有动感；口播先过眼。多套定妆见 assets/looks。
+description: 做「一天一个 GitHub」竖版口播（花花出镜）时用：开场与收束真全屏数字人、中段 FullBleed 闪回、本机 H3 真对口、头/肩须有动感；口播先过眼。开工先认机型（RTX 5080 16GB / RTX 5060 8GB，参数不同不可互套）。多套定妆见 assets/looks。
 ---
 
 # 一天一个 GitHub · 花花主持竖版
@@ -11,6 +11,40 @@ description: 做「一天一个 GitHub」竖版口播（花花出镜）时用：
 一天拆一个有意思的 GitHub：开场点题 → 亮点 → 怎么用 → 实测 → CTA。
 `channelLabel` 默认「AI 速递 · 一天一个 GitHub」。**口播稿先交侃华过眼**再配音成片。
 口播收束可自称「我是花花」；**禁止**把系列/角标写死成「花花聊科学 / 花花讲科学」。
+
+## 机型档案（开工第一步：先识别，再选参数）
+
+同一套 skill 跑在两台机器上，**参数、路径、耗时全都不同**。不许把一台机器的数字套到另一台上。
+
+| 档案 | 显卡 | 显存 | 宿主 | ComfyUI | 启动方式 |
+|---|---|---|---|---|---|
+| **`5080-16G`**（新） | RTX 5080 | 16GB | 32GB RAM，F 盘 NVMe | `F:\AI\ComfyUI_windows_portable`（portable 0.45.0 / Py3.13 / torch2.14 cu130） | `.bat` 或 `main.py --fast-disk --cache-none`，默认 dynamic VRAM |
+| **`5060-8G`**（旧 · TX-HK） | RTX 5060 | 8GB | E 盘 | `E:\minimax H3` + `venv` | **`start_h3_hangsafe.bat`**（t893 唯一默认） |
+
+### 识别命令（两条都要看）
+
+```powershell
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+Test-Path 'F:\AI\ComfyUI_windows_portable\python_embeded\python.exe'   # True → 5080-16G
+Test-Path 'E:\minimax H3\venv\Scripts\python.exe'                      # True → 5060-8G
+```
+
+- `NVIDIA GeForce RTX 5080, 16303 MiB` → **`5080-16G`**
+- 显卡名含 `5060` 或显存 ≈8GB → **`5060-8G`**
+- 两条路径都为假 → **停机问华侃**，不要猜着跑。
+
+### 两档的默认参数差异
+
+| 项 | `5080-16G` | `5060-8G` |
+|---|---|---|
+| 出画分辨率 | **576×1024**（实测够用）；704×1280 可跑但更慢 | **704×1280 优先**，显存不够才 576×1024；7 秒以上片段会 OOM |
+| 步数 | 20（交付档）；12 可提速（下限 ≥8，非 turbo） | ≥8，显存紧 ≥6 |
+| 生成耗时 | **2.0–2.9 s/帧 @20 步**（实测 345 帧≈17 分钟） | 单段 7–12 分钟（裁剪 int8 小模型） |
+| 超分 | **整目录批量** + `-s 4`，**0.79–0.92 s/帧**（见下节） | `upscale_segments.py`（逐帧） |
+| 小窗段 | **不超分**（PiP 仅 304×410，576 宽原片够） | 同左 |
+| 一期权预算 | 无样张验证时 **30–35 分钟** | 4 段约 25–35 分钟 + Remotion 10 分钟 |
+
+> 详细档案：`references/machine-5080-16g.md`、`references/machine-5060-8g.md`。本文件正文里带「TX-HK」字样的规则默认只适用于 `5060-8G`。
 
 ## 定妆（多套）
 资产目录：`assets/looks/<look-id>/`
@@ -37,30 +71,39 @@ description: 做「一天一个 GitHub」竖版口播（花花出镜）时用：
 默认出画基准：`assets/looks/look-01-white-tank/host_look.jpg`（= preferred；路径可仍兼容旧名 vivi-zhuchi `host_look.jpg` 的用法：复制或软链到工程 assets）。
 
 ## 对口
-- TX-HK **本机 MiniMax H3** + lipsync_repair；|lag|≤2（corr&lt;0.4 勿采信）。
+- **本机 MiniMax H3** + lipsync_repair；|lag|≤2（corr&lt;0.4 勿采信）。
+- 音频硬锚定（两台机通用）：`MiniMaxH3AddGuide(frame_idx=0)` 给音频条件，再用
+  `VAEEncodeAudio → 零噪声 mask → LTXVConcatAVLatent` 把旁白 latent 冻结；导出后**重新 mux 原旁白**，不用模型重生成的声音。
+- 提示词里**把实际台词写进去**（`Exact spoken dialogue: ...`）并加 `never a fixed smile`：`5080-16G` 实测这样首句就有口型；只靠音频不给文本时，首段出现过约 2 秒静嘴。
+- 全屏段要写死「framing identical for the whole clip / whole head inside the frame / no zoom」：不写时模型会在中段推近，把头顶切掉。
 - **禁** Grok i2v / 云端假对口交付。云端只配音/素材/Remotion。
 - 布局改版可只重拼 Remotion，复用已过关 H3 与旁白。
 
-## 超分（**交付必做 · 2026-11-09 起**）
+## 超分（**交付必做**）
 
-出画完 → **必须超分**，再进 Remotion。竖版横版一律照此执行：
+出画完 → 超分（**仅全屏段**）→ 再进 Remotion。
 
+**`5080-16G`：整目录批量（3.5 倍速）**
+```bash
+python <skill>/scripts/upscale_batch.py --src gen/renoise-s02.mp4 --out gen_up/renoise-s02.mp4 --work tmp_up/s02
+```
+- 一次调用处理整段帧，实测 **0.79–0.92 s/帧**；逐帧调用是 **2.8 s/帧**，差别全在进程启动开销。
+- **必须 `-s 4`**：本机这版 `realesrgan-ncnn-vulkan` 传 `-s 2` 会输出 **3×3 错位九宫格**（已实测踩坑，2026-11-14）。放大 4 倍后 Lanczos 缩到 1080×1920 即可，别指望降倍数提速。
+- 小窗段（PiP）**不要超分**：窗口只有 304×410，576×1024 原片已经够，白跑一遍等于每人多花 10–25 分钟。
+
+**`5060-8G`：沿用逐帧脚本**
 ```bash
 python <skill>/scripts/upscale_segments.py s1 s7 s16     # 指定段
 python <skill>/scripts/upscale_segments.py --all          # 全部出画段
 ```
 
-- 出画统一 **576×1024** → Real-ESRGAN **`x4plus` + `-t 0`** → **1152×2048**
-  → lanczos 下采样 1080×1920 → `cas=0.35` 极轻锐化 → CRF16，音轨一并 mux。
+**两台通用**
+- 出画 576×1024 → Real-ESRGAN `x4plus` + **`-t 0`** → lanczos 1080×1920 → `cas=0.35` → CRF16，音轨一并 mux。
 - 输出在 `gen_up/renoise-<id>.mp4`，**已是 1080×1920**。包装层 **1:1 直接铺，不要再缩放**。
-- **三个坑（2026-11-09 实测）**：
-  1. 默认 tile=128 会把画面**拼成错位碎块** → 必须 `-t 0`；
-  2. `realesr-animevideov3` 用在真人脸上出**描边感、睫毛结块** → 只用 `x4plus`；
-  3. x4plus 会磨掉毛孔 → 接 `cas=0.35`，**不要上强锐化**（会蜡，撞「禁磨皮」）。
-- **超分后重跑一次 `sync_pic.py`**：确认超分没把口型弄糊。
-- 别再顶 704×1280 出画求原生清晰度 —— 8GB 卡在 7 秒以上片段会 **torch OOM**；
-  576×1024 + standard + steps≥8 超分后实测（睫毛、发丝、皮肤纹理）不比 704 原生差，每步还快约 4 成。
-- Real-ESRGAN 本机已装在 `tools/esrgan/`（**不入 Git 仓**）；换机器时跑 `python <skill>/scripts/fetch_esrgan.py` 自动下载（直连不通会自动走 gh-proxy 镜像）。
+- **三个坑**：① tile 不关会拼成错位碎块 → 必须 `-t 0`；② `realesr-animevideov3` 用在真人脸上出描边 → 只用 `x4plus`；③ x4plus 磨毛孔 → 接 `cas=0.35`，别上强锐化。
+- **FFmpeg 9 起 `-vsync` 已移除**，老脚本里的 `-vsync 0` 要换成 `-fps_mode passthrough`（等价）。
+- 超分后重跑一次 `sync_pic.py` / `qc_landmarks.py`：确认没把口型弄糊。
+- Real-ESRGAN 装在 `tools/esrgan/`（**不入 Git 仓**）；换机器跑 `python <skill>/scripts/fetch_esrgan.py`。
 
 ## 画面（handraw v3/v4）
 | 段 | 布局 |
@@ -87,7 +130,21 @@ python <skill>/scripts/upscale_segments.py --all          # 全部出画段
 ### 衣柜不砍
 look-00～look-07 **全部保留**。本节能改的是**画质与生成/编码参数**，不是衣服套数。
 
-### 默认 H3（交付档 · TX-HK）
+### 默认 H3 交付档
+
+**`5080-16G`（新机 · 实测）**
+
+| 项 | 交付默认 | 说明 |
+|----|----------|------|
+| 分辨率 | **576×1024** 出画 → 批量超分 1080×1920 | 704×1280 可跑但更慢；原生 1344×768 已实测可跑（515 秒/5 秒片） |
+| 步数 | **20**（交付）/ **12**（提速，下限 ≥8） | 不挂 turbo LoRA |
+| 生成耗时 | 2.0–2.9 s/帧 @20 步 | 345 帧段约 17 分钟 |
+| 超分 | 批量目录模式，`-s 4`，0.79–0.92 s/帧 | **仅全屏段**；小窗跳过 |
+| 显存 | 峰值 15.0–15.2G（4MP/16MP/480p/1MP 视频都在这个区间） | 卡的是权重体积，不是分辨率 |
+| 成片 | 1080×1920、8 Mbps、−16 LUFS、真峰 ≤−2 dBTP | 验收脚本 `verify_final.py` |
+
+**`5060-8G`（旧机 · TX-HK）**
+
 | 项 | 交付默认 | 禁止当交付默认 |
 |----|----------|----------------|
 | 分辨率 | 优先 **704×1280**（32 倍数，接近定妆 720×1280）；显存不够再用 **576×1024** | 再降到 384×576；用低分辨率出片后靠 Remotion 硬拉到 1080 当「修好了」 |
@@ -124,12 +181,21 @@ look-00～look-07 **全部保留**。本节能改的是**画质与生成/编码�
 - turbo 4 / 低清只许草稿（试口型与节奏），**过目审、上传前必须交付档重出**。
 - h3gen 已 patch：standard 不挂 LoRA（备份 `h3gen.py.bak_no_turbo`）；每次出片前先查 workflow 里没有 turbo 字符串。
 
-### C. TX-HK 执行纪律
+### C. 执行纪律
+
+**`5080-16G`**
+- ComfyUI 在 `F:\AI\ComfyUI_windows_portable`，用 portable 的 `python_embeded\python.exe -s ComfyUI\main.py --fast-disk --cache-none --disable-partner-nodes --listen 127.0.0.1 --port 8188`。
+- **用独立进程启动**（`Start-Process` 或常驻窗口），别只挂在临时终端里：会话一重启，Comfy 会跟着退出，白等一轮。
+- 16GB + 32GB RAM，权重约 32.5GB 总量，**必须靠 dynamic VRAM + `--fast-disk` 分层**；峰值 15.0–15.2G 是正常状态，不要因为“顶满”去重启。
+- 别用 `--reserve-vram 8` 之类的压力参数做“模拟小卡”：实测会直接把进程跑崩（9.9G 峰值处 OOM），那不是 8G 卡的真实表现。
+- 配音、素材、Remotion 仍可云端；**数字人对口必须本机**。
+
+**`5060-8G`（TX-HK）**
 - Comfy 必须用 `E:\minimax H3\venv` + **`start_h3_hangsafe.bat`** 启动（t893 唯一默认；不要用 pybase 3.13，勿再直跑旧 nosage/t874 bat）。
 - 开跑前查 `nvidia-smi`：排队≠在跑；**GPU-Util 长时间 0% 即假跑**，要查掉线/崩溃，而不是干等。
 - 配音用线上 **ViVi**，**不要预加载 VoxCPM / TTS 服务占显存**（8GB 卡，H3 与 Vox 争显存会让 Comfy 不稳）；除非华侃点名用 huakan 克隆音色。
 - Comfy 已在稳定跑时**不要杀、不要重启**；只杀确认无用的 TTS 进程。
-- TX-HK 本机显卡仅 8GB、装的是裁剪 int8 小模型，不是 65GB 全量版，排期按此估算（单段约 7–12 分钟，一支 4 段约 25–35 分钟 + Remotion ~10 分钟）。
+- 本机显卡仅 8GB、装的是裁剪 int8 小模型，不是 65GB 全量版，排期按此估算（单段约 7–12 分钟，一支 4 段约 25–35 分钟 + Remotion ~10 分钟）。
 
 ### D. 交付前自检（缺一不交）
 1. workflow 无 turbo；steps≥8；分辨率 704×1280 或已书面说明。

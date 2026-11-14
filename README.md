@@ -5,6 +5,17 @@ Skill id：`huahua-zhuchi-skill`（https://github.com/huakan88/huahua-zhuchi-ski
 ## 何时用
 「一天一个 GitHub」竖版口播、花花出镜：开场/收束真全屏数字人、中段 FullBleed、本机 H3 真对口。
 
+## 机型档案（开工先认机）
+同一套 skill 跑两台机器，**参数不可互套**；SKILL.md 开头有识别命令与差异表。
+
+| 档案 | 显卡 | ComfyUI | 参考 |
+|---|---|---|---|
+| `5080-16G` | RTX 5080 16GB / 32GB RAM | `F:\AI\ComfyUI_windows_portable` | `references/machine-5080-16g.md` |
+| `5060-8G` | RTX 5060 8GB（TX-HK） | `E:\minimax H3` + `start_h3_hangsafe.bat` | `references/machine-5060-8g.md` |
+
+关键差异：5080 用 **576×1024 出画 + 目录批量超分（0.79–0.92 s/帧）**，一期约 30–35 分钟；
+5060 用 704×1280 优先、逐帧超分，单段 7–12 分钟。
+
 ## 定妆资产 `assets/looks/`
 每套统一交付：
 - `host_look.jpg` — **唯一**半身正视锁定图（头正直看镜头）
